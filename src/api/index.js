@@ -7,8 +7,8 @@ const startTime = Date.now();
 
 app.use(express.json());
 
-// Enhanced health check endpoint
-app.get('/health', async (_req, res) => {
+// Enhanced health check handler
+const healthCheck = async (_req, res) => {
   const health = {
     status: 'ok',
     timestamp: new Date().toISOString(),
@@ -34,7 +34,11 @@ app.get('/health', async (_req, res) => {
   }
 
   res.json(health);
-});
+};
+
+// Health check endpoints (two paths for the same functionality)
+app.get('/health', healthCheck);
+app.get('/status', healthCheck);
 
 // GET /tasks — list all tasks
 app.get('/tasks', async (_req, res) => {
