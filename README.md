@@ -61,10 +61,33 @@ The API is not exposed directly, but you can reach it through the web container 
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | Health check |
+| GET | `/health`, `/status`, or `/health-status` | Health check with database connectivity status |
 | GET | `/tasks` | List all tasks |
 | POST | `/tasks` | Create a task (`{ "title": "..." }`) |
 | PATCH | `/tasks/:id` | Update a task (`{ "completed": true }` or `{ "title": "..." }`) |
+
+#### Health Check Response
+
+The `/health`, `/status`, and `/health-status` endpoints return comprehensive health information:
+
+```json
+{
+  "status": "ok",
+  "timestamp": "2024-01-15T10:30:45.123Z",
+  "uptime": 3600,
+  "service": "api",
+  "version": "1.0.0",
+  "database": {
+    "status": "connected",
+    "responseTime": "ok"
+  }
+}
+```
+
+- Returns **200 OK** when all systems are healthy
+- Returns **503 Service Unavailable** if the database is unreachable
+- Includes uptime in seconds since the service started
+- Verifies database connectivity with each request
 
 ## Project structure
 
