@@ -61,14 +61,14 @@ The API is not exposed directly, but you can reach it through the web container 
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` or `/status` | Health check with database connectivity status |
+| GET | `/health`, `/status`, or `/health-status` | Health check with database connectivity status |
 | GET | `/tasks` | List all tasks |
 | POST | `/tasks` | Create a task (`{ "title": "..." }`) |
 | PATCH | `/tasks/:id` | Update a task (`{ "completed": true }` or `{ "title": "..." }`) |
 
 #### Health Check Response
 
-The `/health` and `/status` endpoints return comprehensive health information:
+The `/health`, `/status`, and `/health-status` endpoints return comprehensive health information:
 
 ```json
 {

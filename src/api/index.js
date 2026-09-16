@@ -36,9 +36,10 @@ const healthCheck = async (_req, res) => {
   res.json(health);
 };
 
-// Health check endpoints (two paths for the same functionality)
+// Health check endpoints (three paths for the same functionality)
 app.get('/health', healthCheck);
 app.get('/status', healthCheck);
+app.get('/health-status', healthCheck);
 
 // GET /tasks — list all tasks
 app.get('/tasks', async (_req, res) => {
