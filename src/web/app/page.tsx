@@ -1,4 +1,4 @@
-import { getTasks, createTask, toggleTask } from './actions';
+import { getTasks, createTask, toggleTask, deleteTask } from './actions';
 
 export default async function Home() {
   const tasks = await getTasks();
@@ -35,7 +35,7 @@ export default async function Home() {
           {tasks.map((task) => (
             <li
               key={task.id}
-              className="flex items-center gap-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-3"
+              className="flex items-center gap-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-3 group"
             >
               <form
                 action={async () => {
@@ -68,6 +68,24 @@ export default async function Home() {
               >
                 {task.title}
               </span>
+              <form
+                action={async () => {
+                  'use server';
+                  await deleteTask(task.id);
+                }}
+                className="flex-shrink-0"
+              >
+                <button
+                  type="submit"
+                  className="opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all"
+                  aria-label="Delete task"
+                  title="Delete task"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M2 3h12l-.7 11.5c-.05.8-.7 1.5-1.5 1.5H4.2c-.8 0-1.45-.7-1.5-1.5L2 3zm2.5-1.5h7V1h-7v.5zm1 3h1v8h-1V4.5zm3 0h1v8h-1V4.5z" />
+                  </svg>
+                </button>
+              </form>
             </li>
           ))}
         </ul>
