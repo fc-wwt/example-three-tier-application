@@ -19,19 +19,27 @@ export async function getTasks(): Promise<Task[]> {
 
 export async function createTask(formData: FormData) {
   const title = formData.get('title') as string;
-  await fetch(`${API_URL}/tasks`, {
+  const res = await fetch(`${API_URL}/tasks`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title }),
   });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ error: 'Failed to create task' }));
+    throw new Error(error.error || 'Failed to create task');
+  }
   revalidatePath('/');
 }
 
 export async function toggleTask(id: number, completed: boolean) {
-  await fetch(`${API_URL}/tasks/${id}`, {
+  const res = await fetch(`${API_URL}/tasks/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ completed }),
   });
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ error: 'Failed to update task' }));
+    throw new Error(error.error || 'Failed to update task');
+  }
   revalidatePath('/');
 }
